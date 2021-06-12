@@ -29,7 +29,8 @@ spec = do
             poRespectful = pure False,
             poHaddockStyle = pure HaddockSingleLine,
             poNewlinesBetweenDecls = pure 1,
-            poAlign = pure False
+            poAlign = pure False,
+            poLeadingArrows = pure False
           }
   sequence_ $ uncurry checkExample <$> [(ormoluOpts, ""), (defaultPrinterOpts, "-four")] <*> es
 

@@ -291,6 +291,14 @@ printerOptsParser = do
           "Whether to align some syntax elements horizontally"
             <> showDefaultValue poAlign
       ]
+  poLeadingArrows <-
+    (optional . option parseBoundedEnum . mconcat)
+      [ long "leading-arrows",
+        metavar "BOOL",
+        help $
+          "Whether to put arrows before or after types in type signatures"
+            <> showDefaultValue poLeadingArrows
+      ]
   pure PrinterOpts {..}
 
 ----------------------------------------------------------------------------

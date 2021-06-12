@@ -122,7 +122,9 @@ data PrinterOpts f = PrinterOpts
     -- | Number of newlines between top-level decls
     poNewlinesBetweenDecls :: f Int,
     -- | Enable horizontal alignment
-    poAlign :: f Bool
+    poAlign :: f Bool,
+    -- | Enable leading arrows in type signatures
+    poLeadingArrows :: f Bool
   }
   deriving (Generic)
 
@@ -138,7 +140,7 @@ instance Semigroup PrinterOptsPartial where
   (<>) = fillMissingPrinterOpts
 
 instance Monoid PrinterOptsPartial where
-  mempty = PrinterOpts Nothing Nothing Nothing Nothing Nothing Nothing Nothing Nothing Nothing
+  mempty = PrinterOpts Nothing Nothing Nothing Nothing Nothing Nothing Nothing Nothing Nothing Nothing
 
 -- | A version of 'PrinterOpts' without empty fields.
 type PrinterOptsTotal = PrinterOpts Identity
@@ -158,7 +160,8 @@ defaultPrinterOpts =
       poRespectful = pure True,
       poHaddockStyle = pure HaddockMultiLine,
       poNewlinesBetweenDecls = pure 1,
-      poAlign = pure True
+      poAlign = pure True,
+      poLeadingArrows = pure True
     }
 
 -- | Fill the field values that are 'Nothing' in the first argument
@@ -179,7 +182,8 @@ fillMissingPrinterOpts p1 p2 =
       poRespectful = fillField poRespectful,
       poHaddockStyle = fillField poHaddockStyle,
       poNewlinesBetweenDecls = fillField poNewlinesBetweenDecls,
-      poAlign = fillField poAlign
+      poAlign = fillField poAlign,
+      poLeadingArrows = fillField poLeadingArrows
     }
   where
     fillField :: (forall g. PrinterOpts g -> g a) -> f a
