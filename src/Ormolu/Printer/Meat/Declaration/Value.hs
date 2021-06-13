@@ -720,7 +720,13 @@ p_hsExpr' s = \case
       TransStmtCtxt _ -> notImplemented "TransStmtCtxt"
   ExplicitList _ _ xs ->
     brackets s $
-      sep commaDel (sitcc . located' p_hsExprListItem) xs
+      getPrinterOpt poCommaStyle >>= \case
+        Leading ->
+          let ps = pure () : repeat (comma >> space)
+              xs' = zip ps xs
+              e = uncurry (\p -> sitcc . located' ((p >>) . p_hsExprListItem))
+          in sep breakpoint' e xs'
+        Trailing -> sep (comma >> breakpoint) (sitcc . located' p_hsExprListItem) xs
   RecordCon {..} -> do
     located rcon_con_name atom
     breakpointPreRecordBrace
@@ -1393,9 +1399,9 @@ p_hsExprListItem e = do
   indent <- getPrinterOpt poIndentation
   when (listLike e) $ do
     getPrinterOpt poCommaStyle >>= \case
-      Leading -> breakpoint'
+      Leading -> pure ()
       Trailing -> pure ()
-    vlayout (pure ()) (spaces $ indent - 2)
+    -- vlayout (pure ()) (spaces $ indent - 2)
   p_hsExpr e
   where
     spaces n = txt $ Text.replicate n " "
