@@ -33,7 +33,6 @@ module Ormolu.Printer.Combinators
     getLayout,
     breakpoint,
     breakpoint',
-    breakpointAlign,
     getPrinterOpt,
 
     -- ** Formatting lists
@@ -156,13 +155,6 @@ breakpoint = vlayout space newline
 -- > breakpoint' = vlayout (return ()) newline
 breakpoint' :: R ()
 breakpoint' = vlayout (return ()) newline
-
--- | Similar to 'breakpoint' but outputs 'align' in case of single-line
--- layout.
---
--- > breakpoint' = vlayout (return ()) newline
-breakpointAlign :: R ()
-breakpointAlign = vlayout align newline
 
 ----------------------------------------------------------------------------
 -- Formatting lists

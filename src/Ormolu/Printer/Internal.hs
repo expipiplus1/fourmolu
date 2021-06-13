@@ -370,13 +370,15 @@ align = getPrinterOpt poAlign >>= \case
     alignedAlready <- gets scAlignedThisLine
     layout         <- asks rcLayout
     modify $ \sc -> sc
-      { scRequestedDelimiter = case scRequestedDelimiter sc of
-                                 RequestedNothing -> if alignedAlready
-                                   then RequestedSpace
-                                   else case layout of
-                                     SingleLine -> RequestAlign
-                                     MultiLine  -> RequestAlignMulti
-                                 other -> other
+      { scRequestedDelimiter =
+        let r = scRequestedDelimiter sc
+        in  if r `elem` [RequestedNothing, RequestedSpace, AfterNewline]
+              then if alignedAlready
+                then RequestedSpace
+                else case layout of
+                  SingleLine -> RequestAlign
+                  MultiLine  -> RequestAlignMulti
+              else r
       , scAlignedThisLine    = True
       }
 

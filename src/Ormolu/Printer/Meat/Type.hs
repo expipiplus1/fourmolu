@@ -263,7 +263,8 @@ p_conDeclField ConDeclField {..} = do
       (located' (p_rdrName . rdrNameFieldOcc))
       cd_fld_names
   getPrinterOpt poLeadingArrows >>= \case
-    True -> sitcc . inci $ do
+    True -> inci $ do
+      breakpoint'
       align
       txt "::"
       space

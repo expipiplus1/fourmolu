@@ -8,6 +8,7 @@ data Foo where
            , fooBar, fooBaz :: Bool
            , fooFoo
              , barBar
-             , bazBaz :: Int
+             , bazBaz
+                :: Int
            } ->
         Foo
