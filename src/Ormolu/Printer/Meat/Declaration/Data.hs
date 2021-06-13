@@ -17,7 +17,6 @@ import Ormolu.Printer.Combinators
 import Ormolu.Printer.Meat.Common
 import Ormolu.Printer.Meat.Type
 import Ormolu.Utils
-import Data.Bool (bool)
 
 {-# ANN module ("Hlint: ignore Use camelCase" :: String) #-}
 

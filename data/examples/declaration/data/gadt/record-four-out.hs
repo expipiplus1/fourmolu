@@ -10,5 +10,5 @@ data Foo where
              , barBar
              , bazBaz
                 :: Int
-           } ->
-        Foo
+           }
+        -> Foo
