@@ -28,6 +28,7 @@ spec = do
             poDiffFriendlyImportExport = pure False,
             poRespectful = pure False,
             poHaddockStyle = pure HaddockSingleLine,
+            poRecordHaddockLocation = pure Leading,
             poNewlinesBetweenDecls = pure 1,
             poAlign = pure False,
             poLeadingArrows = pure False

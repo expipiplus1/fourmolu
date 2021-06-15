@@ -119,6 +119,8 @@ data PrinterOpts f = PrinterOpts
     poRespectful :: f Bool,
     -- | How to print doc comments
     poHaddockStyle :: f HaddockPrintStyle,
+    -- | Where to print haddocks in records
+    poRecordHaddockLocation :: f LeadingOrTrailing,
     -- | Number of newlines between top-level decls
     poNewlinesBetweenDecls :: f Int,
     -- | Enable horizontal alignment
@@ -140,7 +142,7 @@ instance Semigroup PrinterOptsPartial where
   (<>) = fillMissingPrinterOpts
 
 instance Monoid PrinterOptsPartial where
-  mempty = PrinterOpts Nothing Nothing Nothing Nothing Nothing Nothing Nothing Nothing Nothing Nothing
+  mempty = PrinterOpts Nothing Nothing Nothing Nothing Nothing Nothing Nothing Nothing Nothing Nothing Nothing
 
 -- | A version of 'PrinterOpts' without empty fields.
 type PrinterOptsTotal = PrinterOpts Identity
@@ -159,6 +161,7 @@ defaultPrinterOpts =
       poDiffFriendlyImportExport = pure True,
       poRespectful = pure True,
       poHaddockStyle = pure HaddockMultiLine,
+      poRecordHaddockLocation = pure Leading,
       poNewlinesBetweenDecls = pure 1,
       poAlign = pure True,
       poLeadingArrows = pure True
@@ -181,6 +184,7 @@ fillMissingPrinterOpts p1 p2 =
       poDiffFriendlyImportExport = fillField poDiffFriendlyImportExport,
       poRespectful = fillField poRespectful,
       poHaddockStyle = fillField poHaddockStyle,
+      poRecordHaddockLocation = fillField poRecordHaddockLocation,
       poNewlinesBetweenDecls = fillField poNewlinesBetweenDecls,
       poAlign = fillField poAlign,
       poLeadingArrows = fillField poLeadingArrows
